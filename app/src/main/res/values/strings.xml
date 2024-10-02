@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">AndroidTaskMaria</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="cities">Cities Weather</string>
+    <string name="city_name">City Name</string>
+    <string name="weather">weather</string>
+    <string name="clouds_image">Clouds Image</string>
+    <string name="_23">23</string>
+    <string name="_17">17</string>
+    <string name="slash">/</string>
+    <string name="alert">Alert!</string>
+    <string name="content_descrpition_app_icon">content descrpition app icon</string>
+    <string name="get_started">Get Started</string>
+</resources>

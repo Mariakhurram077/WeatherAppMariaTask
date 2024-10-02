@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?><!-- res/drawable/background_card.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Gradient Background -->
+    <gradient
+        android:angle="90"
+        android:endColor="#501D94"
+        android:startColor="#6633CC" />
+
+    <corners
+        android:topLeftRadius="32dp"
+        android:topRightRadius="32dp"
+        android:bottomRightRadius="32dp"
+        android:bottomLeftRadius="32dp" />
+</shape>
