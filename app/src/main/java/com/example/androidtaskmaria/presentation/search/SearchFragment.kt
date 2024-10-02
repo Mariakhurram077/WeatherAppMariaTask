@@ -18,6 +18,6 @@ private lateinit var binding: FragmentSearchBinding
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        super.onViewCreated(view, savedInstanceState) 
     }
 }
