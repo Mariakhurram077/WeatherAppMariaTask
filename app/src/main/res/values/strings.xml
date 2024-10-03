@@ -12,4 +12,13 @@
     <string name="alert">Alert!</string>
     <string name="content_descrpition_app_icon">content descrpition app icon</string>
     <string name="get_started">Get Started</string>
+    <string name="precipitation">Precipitation</string>
+    <string name="_30">30%</string>
+    <string name="humidity">Humidity</string>
+    <string name="_9km_h">9km/h</string>
+    <string name="wind_speed">Wind Speed</string>
+    <string name="max">Max</string>
+    <string name="min">Min</string>
+    <string name="islamabad">Islamabad</string>
+    <string name="search">Search here</string>
 </resources>

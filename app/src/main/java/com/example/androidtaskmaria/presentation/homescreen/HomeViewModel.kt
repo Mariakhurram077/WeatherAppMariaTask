@@ -49,7 +49,7 @@ class HomeViewModel @Inject constructor(private val weatherUseCases: WeatherUseC
 
     init {
         getWeatherData()
-        getWeatherInfoDaily("Lahore")
+        //    getWeatherInfoDaily("Lahore")
 
     }
 
