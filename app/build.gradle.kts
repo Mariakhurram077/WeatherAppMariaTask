@@ -7,7 +7,7 @@ plugins {
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
     id("kotlin-parcelize")
-
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 val keyProperties = Properties()
@@ -93,6 +93,7 @@ dependencies {
     //lifecycle dependency
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
 }
 kapt {
     correctErrorTypes = true

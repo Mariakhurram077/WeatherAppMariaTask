@@ -49,61 +49,32 @@
             android:layout_marginStart="15dp"
             android:contentDescription="@string/content_descrpition_app_icon"
             android:src="@drawable/ic_smoke_haze"
-            app:layout_constraintBottom_toBottomOf="@+id/minTextView"
+            app:layout_constraintBottom_toBottomOf="@+id/feelsLikeValue"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/maxTextView" />
+            app:layout_constraintTop_toTopOf="@+id/feelsLikeText" />
 
         <TextView
-            android:id="@+id/minTextView"
+            android:id="@+id/feelsLikeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins"
-            android:text="@string/min"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/minTemp"
-            app:layout_constraintEnd_toEndOf="@+id/maxTextView"
-            app:layout_constraintStart_toStartOf="@+id/maxTextView"
-            app:layout_constraintTop_toBottomOf="@+id/maxTextView" />
-
-        <TextView
-            android:id="@+id/maxTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:fontFamily="@font/poppins"
-            android:text="@string/max"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/maxTemp"
-            app:layout_constraintEnd_toStartOf="@+id/maxTemp"
-            app:layout_constraintTop_toTopOf="@+id/maxTemp" />
-
-        <TextView
-            android:id="@+id/maxTemp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="30dp"
             android:fontFamily="@font/poppins_semibold"
-            android:text="@string/_23"
+            android:text="@string/feels_like"
             android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/minTemp"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/minTemp"
+            android:id="@+id/feelsLikeValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="40dp"
-            android:fontFamily="@font/poppins_medium"
-            android:text="@string/_17"
+            android:fontFamily="@font/poppins_semibold"
             android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/maxTemp" />
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="@+id/feelsLikeText"
+            app:layout_constraintTop_toBottomOf="@+id/feelsLikeText" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -124,11 +95,10 @@
                 android:src="@drawable/ic_umbrella" />
 
             <TextView
-                android:id="@+id/precipitationPercent"
+                android:id="@+id/pressureValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_semibold"
-                android:text="@string/_30"
                 android:textColor="@color/white" />
 
             <TextView
@@ -136,10 +106,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_semibold"
-                android:text="@string/precipitation"
+                android:text="@string/pressure"
                 android:textColor="@color/white" />
-
-
         </LinearLayout>
 
         <LinearLayout
@@ -164,7 +132,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_semibold"
-                android:text="@string/_30"
                 android:textColor="@color/white" />
 
             <TextView
@@ -196,11 +163,10 @@
                 android:src="@drawable/ic_wind_speed" />
 
             <TextView
-                android:id="@+id/windSpeed"
+                android:id="@+id/windSpeedValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_semibold"
-                android:text="@string/_9km_h"
                 android:textColor="@color/white" />
 
             <TextView
@@ -225,4 +191,15 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
         tools:itemCount="10"
         tools:listitem="@layout/weather_forecast_layout" />
+
+    <ProgressBar
+        android:id="@+id/loadingProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 </androidx.constraintlayout.widget.ConstraintLayout>

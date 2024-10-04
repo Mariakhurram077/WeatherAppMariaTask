@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">AndroidTaskMaria</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="cities">Cities Weather</string>
     <string name="city_name">City Name</string>
@@ -21,4 +20,11 @@
     <string name="min">Min</string>
     <string name="islamabad">Islamabad</string>
     <string name="search">Search here</string>
+    <string name="feels_like">Feels Like</string>
+    <string name="temperature">%s\u00B0</string>
+    <string name="feels_like_value">%s\u00B0</string>
+    <string name="humidity_format">%d%%</string>
+    <string name="sea_level">Sea Level</string>
+    <string name="pressure">Pressure</string>
+    <string name="pressure_format">%d mb</string>
 </resources>

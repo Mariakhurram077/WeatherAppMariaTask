@@ -35,7 +35,7 @@ class CitiesAdapter(
             val iconResId = getWeatherIcon(item.weather[0].main, isDay)
             binding.apply {
                 val temperature = Math.round(item.main.temp)
-                temperatureText.text = "$temperature\u00B0"
+                temperatureText.text = itemView.context.getString(R.string.temperature, temperature.toString())
                 cityName.text = item.name
                 weatherCondition.text = item.weather[0].main
                 weatherConditionIv.setImageResource(iconResId)
@@ -88,7 +88,6 @@ class CitiesAdapter(
         private fun isDaytime(currentTime: Long, sunrise: Int, sunset: Int): Boolean {
             return currentTime in (sunrise..sunset)
         }
-
     }
 
     class DiffCallBack : DiffUtil.ItemCallback<WeatherInfo.WeatherData>() {

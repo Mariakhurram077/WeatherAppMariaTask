@@ -94,6 +94,10 @@ fun WeatherInfoDTO.toWeatherInfo(): WeatherInfo {
     return WeatherInfo(cnt = cnt ?: 0, list = list?.map { it.toWeatherData() } ?: emptyList())
 }
 
+fun WeatherInfoDTO.WindDTO.toWind(): WeatherInfo.Wind {
+    return WeatherInfo.Wind(speed = speed)
+}
+
 fun WeatherInfoDTO.toWeatherInfoEntity(): WeatherInfoEntity {
     return WeatherInfoEntity(cnt = cnt, list = list?.map { it.toWeatherData() } ?: emptyList())
 }
@@ -116,6 +120,7 @@ fun WeatherInfoDTO.WeatherDataDTO.toWeatherData(): WeatherInfo.WeatherData {
             sunset = 0,
             sunrise = 0,
         ),
+        wind = wind?.toWind() ?: WeatherInfo.Wind(0.0),
         weather = weather?.map {
             it.toWeather()
         } ?: emptyList())

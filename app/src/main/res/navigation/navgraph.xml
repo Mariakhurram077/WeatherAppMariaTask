@@ -9,7 +9,7 @@
         android:id="@+id/homeFragment"
         android:name="com.example.androidtaskmaria.presentation.homescreen.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_detailScreenFragment"
             app:destination="@id/detailScreenFragment" />
@@ -21,12 +21,18 @@
         android:id="@+id/detailScreenFragment"
         android:name="com.example.androidtaskmaria.presentation.detailscreen.DetailScreenFragment"
         android:label="fragment_detail_screen"
-        tools:layout="@layout/fragment_detail_screen" />
+        tools:layout="@layout/fragment_detail_screen">
+        <argument
+            android:name="weatherItem"
+            app:argType="com.example.androidtaskmaria.domain.model.WeatherInfo$WeatherData"
+            app:nullable="false"
+            />
+    </fragment>
     <fragment
         android:id="@+id/getStartedFragment"
         android:name="com.example.androidtaskmaria.presentation.getstarted.GetStartedFragment"
         android:label="fragment_get_started"
-        tools:layout="@layout/fragment_get_started" >
+        tools:layout="@layout/fragment_get_started">
         <action
             android:id="@+id/action_getStartedFragment_to_homeFragment"
             app:destination="@id/homeFragment" />

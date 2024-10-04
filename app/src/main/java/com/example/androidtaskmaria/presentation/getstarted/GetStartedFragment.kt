@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.androidtaskmaria.R
 import com.example.androidtaskmaria.databinding.FragmentGetStartedBinding
+import com.example.androidtaskmaria.presentation.getstarted.GetStartedFragmentDirections
 
 class GetStartedFragment : Fragment() {
     private lateinit var binding: FragmentGetStartedBinding
@@ -23,7 +24,7 @@ class GetStartedFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             getStartedBtn.setOnClickListener {
-                findNavController().navigate(R.id.action_getStartedFragment_to_homeFragment)
+                findNavController().navigate(GetStartedFragmentDirections.actionGetStartedFragmentToHomeFragment())
             }
         }
     }
