@@ -48,7 +48,7 @@
             android:layout_height="80dp"
             android:layout_marginStart="15dp"
             android:contentDescription="@string/content_descrpition_app_icon"
-            android:src="@drawable/ic_smoke_haze"
+            android:src="@drawable/cloudy_weather"
             app:layout_constraintBottom_toBottomOf="@+id/feelsLikeValue"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/feelsLikeText" />

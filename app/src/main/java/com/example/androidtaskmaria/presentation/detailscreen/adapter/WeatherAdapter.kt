@@ -1,4 +1,4 @@
-package com.example.androidtaskmaria.presentation.homescreen.adapter
+package com.example.androidtaskmaria.presentation.detailscreen.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,44 +6,39 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidtaskmaria.R
-import com.example.androidtaskmaria.databinding.CitiesLayoutBinding
-import com.example.androidtaskmaria.domain.model.WeatherInfo
+import com.example.androidtaskmaria.databinding.WeatherForecastLayoutBinding
+import com.example.androidtaskmaria.presentation.detailscreen.DailyWeatherData
 
-class CitiesAdapter(
-    private val onItemClick: (item: WeatherInfo.WeatherData) -> Unit,
-) :
-    ListAdapter<WeatherInfo.WeatherData, CitiesAdapter.CitiesViewHolder>(DiffCallBack()) {
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): CitiesAdapter.CitiesViewHolder {
+class WeatherAdapter :
+    ListAdapter<DailyWeatherData, WeatherAdapter.WeatherInfoViewHolder>(DiffCallBack()) {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherInfoViewHolder {
         val binding =
-            CitiesLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return CitiesViewHolder(binding)
+            WeatherForecastLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return WeatherInfoViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: CitiesAdapter.CitiesViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: WeatherInfoViewHolder, position: Int) {
         val item = getItem(position)
         holder.bind(item)
     }
 
-    inner class CitiesViewHolder(private val binding: CitiesLayoutBinding) :
+    inner class WeatherInfoViewHolder(private val binding: WeatherForecastLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: WeatherInfo.WeatherData) {
+        fun bind(item: DailyWeatherData) {
             val currentTime = System.currentTimeMillis() / 1000 // Current time in seconds
-            val isDay = isDaytime(currentTime, item.sys.sunrise, item.sys.sunset)
-            val iconResId = getWeatherIcon(item.weather[0].main, isDay)
+            val isDay = isDaytime(currentTime, item.sunrise, item.sunset)
             binding.apply {
-                temperatureText.text = itemView.context.getString(
-                    R.string.temperature,
-                    Math.round(item.main.temp).toString()
+                minTempText.text = itemView.context.getString(
+                    R.string.temperature, Math.round(item.minTemp).toString()
                 )
-                cityName.text = item.name
-                weatherCondition.text = item.weather[0].main
-                weatherConditionIv.setImageResource(iconResId)
-                weatherLayout.setOnClickListener {
-                    onItemClick.invoke(item)
-                }
+                maxTempText.text = itemView.context.getString(
+                    R.string.temperature,
+                    Math.round(item.maxTemp).toString()
+                )
+                weatherConditionText.text = item.weatherCondition
+                dayText.text = item.dayName
+                weatherCondIv.setImageResource(getWeatherIcon(item.weatherCondition, isDay))
             }
         }
 
@@ -92,20 +87,17 @@ class CitiesAdapter(
         }
     }
 
-    class DiffCallBack : DiffUtil.ItemCallback<WeatherInfo.WeatherData>() {
+    class DiffCallBack : DiffUtil.ItemCallback<DailyWeatherData>() {
         override fun areItemsTheSame(
-            oldItem: WeatherInfo.WeatherData,
-            newItem: WeatherInfo.WeatherData
+            oldItem: DailyWeatherData, newItem: DailyWeatherData
         ): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem.dayName == newItem.dayName
         }
 
         override fun areContentsTheSame(
-            oldItem: WeatherInfo.WeatherData,
-            newItem: WeatherInfo.WeatherData
+            oldItem: DailyWeatherData, newItem: DailyWeatherData
         ): Boolean {
             return oldItem == newItem
         }
-
     }
 }

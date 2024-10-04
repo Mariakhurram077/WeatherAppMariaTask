@@ -1,7 +1,6 @@
 package com.example.androidtaskmaria.presentation.detailscreen
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,10 +9,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidtaskmaria.R
 import com.example.androidtaskmaria.databinding.FragmentDetailScreenBinding
 import com.example.androidtaskmaria.domain.model.WeatherInfo
 import com.example.androidtaskmaria.presentation.AlertDialog
+import com.example.androidtaskmaria.presentation.detailscreen.adapter.WeatherAdapter
 import com.example.androidtaskmaria.presentation.visibility
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,6 +25,7 @@ class DetailScreenFragment : Fragment() {
     private val viewModel: DetailsScreenViewModel by viewModels()
     private lateinit var weatherData: WeatherInfo.WeatherData
     private val args by navArgs<DetailScreenFragmentArgs>()
+    private lateinit var weatherInfoAdapter: WeatherAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,6 +37,7 @@ class DetailScreenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         weatherData = args.weatherItem
+        weatherInfoAdapter = WeatherAdapter()
         binding.apply {
             cityTextView.text = weatherData.name
             feelsLikeValue.text = getString(
@@ -44,15 +47,32 @@ class DetailScreenFragment : Fragment() {
             humidityPercent.text = getString(R.string.humidity_format, weatherData.main.humidity)
             pressureValue.text = getString(R.string.pressure_format, weatherData.main.pressure)
             windSpeedValue.text = (weatherData.wind.speed).toString()
+
             backButton.setOnClickListener {
                 findNavController().navigateUp()
+            }
+
+            rvWeather.apply {
+                adapter = weatherInfoAdapter
+                layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             }
         }
 
         viewModel.getWeatherInfoDaily(weatherData.name)
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.weatherDataDaily.collect { weatherData ->
-                Log.i("weatherdata", "onViewCreated: $weatherData")
+                viewModel.groupWeatherByDay(
+                    list = weatherData?.list ?: emptyList(),
+                    weatherData?.city?.sunrise ?: 0,
+                    weatherData?.city?.sunset ?: 0
+                )
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.weatherData.collect {
+                weatherInfoAdapter.submitList(it)
 
             }
         }

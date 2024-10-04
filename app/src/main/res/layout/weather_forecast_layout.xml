@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    android:background="@drawable/home_screen_bg"
-    android:paddingBottom="10dp">
+    android:background="@drawable/home_screen_bg">
 
     <TextView
         android:id="@+id/dayText"
@@ -15,50 +13,39 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/poppins"
-        android:text="Monday"
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/weatherLayout"
+    <ImageView
+        android:id="@+id/weatherCondIv"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="100dp"
+        android:contentDescription="@string/content_descrpition_app_icon"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/weatherConditionText"
+        app:layout_constraintEnd_toStartOf="@+id/minTempText"
+        app:layout_constraintTop_toTopOf="@+id/weatherConditionText" />
+
+    <TextView
+        android:id="@+id/weatherConditionText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:gravity="center"
-
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@+id/dayText"
-        app:layout_constraintStart_toEndOf="@+id/dayText"
-        app:layout_constraintTop_toTopOf="@+id/dayText"
-        tools:ignore="UseCompoundDrawables">
-
-        <ImageView
-            android:id="@+id/weatherCondIv"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:contentDescription="@string/content_descrpition_app_icon"
-            android:src="@drawable/ic_smoke_haze" />
-
-        <TextView
-            android:id="@+id/weatherConditionText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:fontFamily="@font/poppins_medium"
-            android:text="Sunny"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
-    </LinearLayout>
+        android:fontFamily="@font/poppins_medium"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/minTempText"
+        app:layout_constraintStart_toEndOf="@+id/weatherCondIv"
+        app:layout_constraintTop_toTopOf="@+id/minTempText" />
 
     <TextView
         android:id="@+id/minTempText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="18dp"
         android:fontFamily="@font/poppins_medium"
-        android:text="31"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/maxTempText"
@@ -71,10 +58,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:fontFamily="@font/poppins_medium"
-        android:text="42"
         android:textColor="@color/white"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/weatherLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/weatherLayout" />
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
