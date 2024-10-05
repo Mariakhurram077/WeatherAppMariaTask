@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -36,12 +37,7 @@ class SearchFragment : Fragment() {
         binding.apply {
             searchIcon.setOnClickListener {
                 val cityName = searchEditText.text.toString()
-                if (cityName.isNotBlank()) {
-                    viewModel.getWeatherInfoDaily(cityName = cityName)
-                } else {
-                    Toast.makeText(requireContext(), "Please Enter City Name!", Toast.LENGTH_SHORT)
-                        .show()
-                }
+                searchWeather(cityName = cityName)
             }
 
             rvSearchWeather.apply {
@@ -49,36 +45,60 @@ class SearchFragment : Fragment() {
                 layoutManager =
                     LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             }
-        }
 
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.weatherDataDaily.collect { weatherData ->
-                viewModel.groupWeatherByDay(
-                    list = weatherData?.list ?: emptyList(),
-                    weatherData?.city?.sunrise ?: 0,
-                    weatherData?.city?.sunset ?: 0
-                )
+            searchEditText.setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    val cityName = searchEditText.text.toString()
+                    searchWeather(cityName = cityName)
+                    true
+                } else {
+                    false
+                }
             }
-        }
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.weatherData.collect {
-                weatherInfoAdapter.submitList(it)
 
+            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+                viewModel.weatherDataDaily.collect { weatherData ->
+                    viewModel.groupWeatherByDay(
+                        list = weatherData?.list ?: emptyList(),
+                        weatherData?.city?.sunrise ?: 0,
+                        weatherData?.city?.sunset ?: 0
+                    )
+                }
             }
-        }
 
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.detailScreenEvents.collect { event ->
-                when (event) {
-                    is DetailsScreenViewModel.DetailScreenEvents.ShowErrorMessage -> {
-                        AlertDialog.showAlertDialog(requireContext(), message = event.message)
+            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+                viewModel.weatherData.collect {
+                    weatherInfoAdapter.submitList(it)
+
+                }
+            }
+
+            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+                viewModel.detailScreenEvents.collect { event ->
+                    when (event) {
+                        is DetailsScreenViewModel.DetailScreenEvents.ShowErrorMessage -> {
+                            AlertDialog.showAlertDialog(
+                                requireContext(),
+                                message = event.message
+                            )
+                        }
                     }
                 }
             }
-        }
 
-        viewModel.isLoading.observe(viewLifecycleOwner) {
-            binding.loadingProgressBar.visibility(it)
+            viewModel.isLoading.observe(viewLifecycleOwner) {
+                binding.loadingProgressBar.visibility(it)
+            }
+        }
+    }
+
+    private fun searchWeather(cityName: String) {
+        if (cityName.isNotBlank()) {
+            viewModel.getWeatherInfoDaily(cityName = cityName)
+        } else {
+            Toast.makeText(requireContext(), "Please Enter City Name!", Toast.LENGTH_SHORT).show()
         }
     }
 }
+
+
