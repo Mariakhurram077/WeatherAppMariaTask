@@ -8,6 +8,7 @@ import com.example.androidtaskmaria.core.util.Resource
 import com.example.androidtaskmaria.domain.model.WeatherDailyInfo
 import com.example.androidtaskmaria.domain.usecase.WeatherUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -50,10 +51,11 @@ class DetailsScreenViewModel @Inject constructor(private val weatherUseCases: We
     private var _weatherData =
         MutableStateFlow<List<DailyWeatherData>>(emptyList())
     val weatherData: StateFlow<List<DailyWeatherData>> get() = _weatherData
+    private var job: Job? = null
 
-    private val groupedWeatherData: MutableList<DailyWeatherData> = mutableListOf()
     fun getWeatherInfoDaily(cityName: String) = viewModelScope.launch {
-        weatherUseCases.getWeatherDailyData(cityName).onEach { result ->
+        job?.cancel()
+        job = weatherUseCases.getWeatherDailyData(cityName).onEach { result ->
             when (result) {
                 is Resource.Loading -> {
                     _isLoading.postValue(true)
@@ -86,6 +88,7 @@ class DetailsScreenViewModel @Inject constructor(private val weatherUseCases: We
     //  as api is giving data of a day in three intervals, this func is calculating average and showing 1 response per day
     fun groupWeatherByDay(list: List<WeatherDailyInfo.WeatherInfoData>, sunset: Int, sunrise: Int) =
         viewModelScope.launch {
+            val groupedWeatherData: MutableList<DailyWeatherData> = mutableListOf()
             val dailyWeatherMap =
                 mutableMapOf<String, MutableList<WeatherDailyInfo.WeatherInfoData>>()
 
