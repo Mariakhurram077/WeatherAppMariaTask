@@ -76,12 +76,14 @@ class DetailsScreenViewModel @Inject constructor(private val weatherUseCases: We
         }.launchIn(this)
     }
 
+    // api is not giving day name, this function is used to get day name from date
     private fun getDayName(timestamp: Int): String {
         val date = Date(timestamp * 1000L)
         val formatter = SimpleDateFormat("EEEE", Locale.getDefault())
         return formatter.format(date)
     }
 
+    //  as api is giving data of a day in three intervals, this func is calculating average and showing 1 response per day
     fun groupWeatherByDay(list: List<WeatherDailyInfo.WeatherInfoData>, sunset: Int, sunrise: Int) =
         viewModelScope.launch {
             val dailyWeatherMap =

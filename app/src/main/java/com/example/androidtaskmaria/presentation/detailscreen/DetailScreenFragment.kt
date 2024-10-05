@@ -15,6 +15,8 @@ import com.example.androidtaskmaria.databinding.FragmentDetailScreenBinding
 import com.example.androidtaskmaria.domain.model.WeatherInfo
 import com.example.androidtaskmaria.presentation.AlertDialog
 import com.example.androidtaskmaria.presentation.detailscreen.adapter.WeatherAdapter
+import com.example.androidtaskmaria.presentation.isDaytime
+import com.example.androidtaskmaria.presentation.toWeatherIcon
 import com.example.androidtaskmaria.presentation.visibility
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,6 +40,12 @@ class DetailScreenFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         weatherData = args.weatherItem
         weatherInfoAdapter = WeatherAdapter()
+        val currentTime = System.currentTimeMillis() / 1000
+        val isDay = currentTime.isDaytime(
+            sunrise = weatherData.sys.sunrise,
+            sunset = weatherData.sys.sunset
+        )
+        val iconResId = weatherData.weather[0].main.toWeatherIcon(isDay = isDay)
         binding.apply {
             cityTextView.text = weatherData.name
             feelsLikeValue.text = getString(
@@ -47,6 +55,7 @@ class DetailScreenFragment : Fragment() {
             humidityPercent.text = getString(R.string.humidity_format, weatherData.main.humidity)
             pressureValue.text = getString(R.string.pressure_format, weatherData.main.pressure)
             windSpeedValue.text = (weatherData.wind.speed).toString()
+            weatherIv.setImageResource(iconResId)
 
             backButton.setOnClickListener {
                 findNavController().navigateUp()

@@ -31,7 +31,9 @@ class HomeViewModel @Inject constructor(private val weatherUseCases: WeatherUseC
         getWeatherData()
     }
 
-     fun getWeatherData() = viewModelScope.launch {
+    // get weather data for provided list of cities, api can accept city id's
+    // i have passed cities id's along with end point in api service
+    fun getWeatherData() = viewModelScope.launch {
         weatherUseCases.getWeatherData.invoke().onEach { result ->
             when (result) {
                 is Resource.Loading -> {

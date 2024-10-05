@@ -90,10 +90,6 @@ data class WeatherInfoDTO(
 
 }
 
-fun WeatherInfoDTO.toWeatherInfo(): WeatherInfo {
-    return WeatherInfo(cnt = cnt ?: 0, list = list?.map { it.toWeatherData() } ?: emptyList())
-}
-
 fun WeatherInfoDTO.WindDTO.toWind(): WeatherInfo.Wind {
     return WeatherInfo.Wind(speed = speed)
 }
@@ -152,24 +148,6 @@ fun WeatherDTO.toWeather(): WeatherInfo.Weather {
     )
 }
 
-fun WeatherInfoDTO.toWeatherDailyInfo(): WeatherDailyInfo {
-    return WeatherDailyInfo(
-        city = city?.toWeatherInfoCity() ?: WeatherDailyInfo.City(
-            coord = WeatherDailyInfo.Coord(lat = 0.0, lon = 0.0),
-            country = "",
-            id = 0,
-            name = "",
-            population = 0,
-            sunset = 0,
-            sunrise = 0,
-            timezone = 0
-        ),
-        cnt = cnt ?: 0,
-        cod = cod ?: "",
-        list = list?.map { it.toWeatherInfoData() } ?: emptyList(),
-        message = message ?: 0)
-}
-
 fun WeatherInfoDTO.WeatherDataDTO.toWeatherInfoData(): WeatherDailyInfo.WeatherInfoData {
     return WeatherDailyInfo.WeatherInfoData(
         clouds = clouds?.toWeatherInfoClouds() ?: WeatherDailyInfo.Clouds(all = 0),
@@ -198,7 +176,7 @@ fun WeatherInfoDTO.WeatherDataDTO.toWeatherInfoData(): WeatherDailyInfo.WeatherI
     )
 }
 
-fun WeatherInfoDTO.MainDTO.toWeatherInfoMain(): WeatherDailyInfo.Main {
+fun MainDTO.toWeatherInfoMain(): WeatherDailyInfo.Main {
     return WeatherDailyInfo.Main(
         feels_like = feelLike ?: 0.0,
         grnd_level = grndLevel ?: 0,
@@ -212,12 +190,8 @@ fun WeatherInfoDTO.MainDTO.toWeatherInfoMain(): WeatherDailyInfo.Main {
     )
 }
 
-fun WeatherInfoDTO.SysDTO.toWeatherInfoSys(): WeatherDailyInfo.Sys {
+fun SysDTO.toWeatherInfoSys(): WeatherDailyInfo.Sys {
     return WeatherDailyInfo.Sys(pod = pod.orEmpty())
-}
-
-fun WeatherInfoDTO.CoordDTO.toWeatherInfoCoord(): WeatherDailyInfo.Coord {
-    return WeatherDailyInfo.Coord(lat = latitude ?: 0.0, lon = longitude ?: 0.0)
 }
 
 fun WeatherInfoDTO.CloudsDTO.toWeatherInfoClouds(): WeatherDailyInfo.Clouds {
@@ -228,19 +202,7 @@ fun WeatherInfoDTO.WindDTO.toWeatherInfoWind(): WeatherDailyInfo.Wind {
     return WeatherDailyInfo.Wind(deg = deg ?: 0, gust = gust ?: 0.0, speed = speed ?: 0.0)
 }
 
-fun WeatherInfoDTO.CityDTO.toWeatherInfoCity(): WeatherDailyInfo.City {
-    return WeatherDailyInfo.City(
-        coord = coordinates?.toWeatherInfoCoord() ?: WeatherDailyInfo.Coord(lat = 0.0, lon = 0.0),
-        country = country.orEmpty(),
-        id = id ?: 0,
-        name = name.orEmpty(),
-        population = population ?: 0,
-        sunrise = sunrise ?: 0,
-        sunset = sunset ?: 0, timezone = timezone ?: 0
-    )
-}
-
-fun WeatherInfoDTO.WeatherDTO.toWeatherInfoWeather(): WeatherDailyInfo.WeatherData {
+fun WeatherDTO.toWeatherInfoWeather(): WeatherDailyInfo.WeatherData {
     return WeatherDailyInfo.WeatherData(
         description = description.orEmpty(),
         icon = icon.orEmpty(),

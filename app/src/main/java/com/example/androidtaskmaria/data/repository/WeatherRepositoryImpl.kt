@@ -1,6 +1,5 @@
 package com.example.androidtaskmaria.data.repository
 
-import android.net.http.HttpException
 import android.os.Build
 import androidx.annotation.RequiresExtension
 import com.example.androidtaskmaria.BuildConfig
@@ -16,6 +15,7 @@ import com.example.androidtaskmaria.domain.model.WeatherInfo
 import com.example.androidtaskmaria.domain.repository.WeatherRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
@@ -76,12 +76,21 @@ class WeatherRepositoryImpl @Inject constructor(
                     )
                 )
             } catch (e: HttpException) {
-                emit(
-                    Resource.Error(
-                        message = "OOPS! Something went wrong",
-                        data = weatherDailyInfo
+                if (e.code() == 404) {
+                    emit(
+                        Resource.Error(
+                            message = "Please Enter Correct City Name",
+                            data = weatherDailyInfo
+                        )
                     )
-                )
+                } else {
+                    emit(
+                        Resource.Error(
+                            message = "OOPS! Something went wrong",
+                            data = weatherDailyInfo
+                        )
+                    )
+                }
             } catch (e: IOException) {
                 emit(
                     Resource.Error(
